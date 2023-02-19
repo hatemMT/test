@@ -1,0 +1,55 @@
+type Query  {
+    listAllAppointmentsToday : [Appointment]!
+    filterAppointmentsByDate(fromDate: LocalDateTime, toDate: LocalDateTime): [Appointment]!
+    filterAppointmentsByPatientName(patientName: String): [Appointment]!
+    allAppointmentsByPatientName(patientName: String): [Appointment]!
+}
+
+type Mutation{
+    addNewAppointment(newAppointment: CreateAppointmentCommand) : Appointment
+    cancelAppointment(id: ID, reason: CancellationReason): Appointment
+}
+
+input CreateAppointmentCommand {
+    patientId: ID
+    doctorId: ID
+    dateTime: LocalDateTime
+}
+
+
+enum CancellationReason {
+    NO_SHOW,
+    PATIENT_REQUEST,
+    PHYSICIAN_REQUEST
+}
+
+type Doctor {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    phone: String!
+}
+
+type Appointment {
+    id: ID!
+    doctor: Doctor
+    patient: Patient
+    dateTime: LocalDateTime
+    status: Status
+    cancellationReason: CancellationReason
+}
+
+enum Status {
+    ACTIVE,
+    CANCELED
+}
+
+type Patient {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    phone: String!
+}
+
+scalar LocalDateTime
+

@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: "jdbc:tc:postgres:15.2:///spring_boot_testcontainers"
+  test:
+    database:
+      replace: none

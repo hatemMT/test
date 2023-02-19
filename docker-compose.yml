@@ -1,0 +1,21 @@
+services:
+
+  db:
+    image: postgres:15.2
+    restart: on-failure
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: clinic_db
+    ports:
+      - 5432:5432
+
+
+  app:
+    build: .
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/clinic_db
+      DB_USERNAME: user
+      DB_PASSWORD: password
+    ports:
+      - 8080:8080
